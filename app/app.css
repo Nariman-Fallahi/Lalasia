@@ -3,13 +3,51 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-paragraphColor: #afadb5;
+  --color-secondary: #ffb23f;
+  --color-main: #518581;
+  --color-lineColor: #f3f3f3;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-[#fafafa] pb-1;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+p,
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply cursor-default;
+}
+
+.openMenu {
+  display: block;
+  animation: OPEN_MENU 0.3s ease-in forwards;
+}
+@keyframes OPEN_MENU {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.closeMenu {
+  display: block;
+  animation: CLOSE_MENU 0.2s ease-in forwards;
+}
+@keyframes CLOSE_MENU {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+    display: none;
   }
 }
