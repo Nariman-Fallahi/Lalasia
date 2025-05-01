@@ -1,87 +1,73 @@
-# Welcome to React Router!
+## لالاسیا (_فارسی_)
 
-A modern, production-ready template for building full-stack React applications using React Router.
+![Lalasia Screenshot](https://project-files.storage.c2.liara.space/Lalasia/MD/Screen%202.png)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## درباره لالاسیا
+
+پروژه لالاسیا یک وبسایت انگلیسی زبان که با هدف فروش محصولات چوبی خانگی راه اندازی شده است.
+
+## قابلیت های پروژه
+
+<div align="right">
+<p> • احراض هویت با ایمیل</p>
+<p> • افزودن یا حذف کالا از سبد خرید</p>
+<p> • جستجو در لیست کالاها</p>
+<p> • مشاهده و ویرایش اطلاعات حساب کاربری</p>
+</div>
+
+## تکنولوژی های استفاده شده
+
+<div align="right">
+<p> • React Router v7</p>
+<p> • TypeScript</p>
+<p> • Tailwind CSS</p>
+<p> • Supabase</p>
+</div>
+
+## نحوه اجرای پروژه
+
+```bash
+git clone git@github.com:Nariman-Fallahi/Lalasia.git
+cd Lalasia
+pnpm i
+pnpm run dev
+```
+
+## توسعه دهنده
+
+نریمان فلاحی – توسعه‌دهنده فول‌استک
+
+## Lalasia (_English_)
+
+![Lalasia Screenshot](https://project-files.storage.c2.liara.space/Lalasia/MD/Screen%202.png)
+
+## About Lalasia
+
+Lalasia is an English-language e-commerce website built to sell handcrafted wooden home products.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Email-based authentication
+- Add or remove items from the shopping cart
+- Search through the list of products
+- View and edit user profile information
 
-## Getting Started
+## Technologies Used
 
-### Installation
+- React Router v7
+- TypeScript
+- Tailwind CSS
+- Supabase
 
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
+## How to Run the Project
 
 ```bash
-npm run dev
+git clone git@github.com:Nariman-Fallahi/Lalasia.git
+cd Lalasia
+pnpm i
+pnpm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+## Developer
 
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+Nariman Fallahi – Full-Stack Developer
