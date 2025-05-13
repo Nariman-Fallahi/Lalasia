@@ -30,7 +30,7 @@ export default function Header({ data }: HeaderProps) {
 
       <div className="w-full flex flex-col items-center relative">
         <div className="w-[95%] mt-6 md:w-1/2 z-10">
-          <SearchBox />
+          <SearchBox isNavigateToProducts />
         </div>
 
         <img

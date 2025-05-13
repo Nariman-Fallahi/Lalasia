@@ -1,20 +1,29 @@
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
-export default function SearchBox() {
-  const [value, setValue] = useState<string>();
+interface SearchBoxProps {
+  isNavigateToProducts?: boolean;
+}
+
+export default function SearchBox({ isNavigateToProducts }: SearchBoxProps) {
+  const [value, setValue] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const search = searchParams.get("search");
     if (search) {
       setValue(search);
     }
-  }, []);
+  }, [searchParams]);
 
-  const handlelSetSearchParams = () => {
-    setSearchParams({ search: value || "" });
+  const handleSearchSubmit = () => {
+    if (isNavigateToProducts) {
+      navigate(`/products?search=${value}`);
+    } else {
+      setSearchParams({ search: value || "" });
+    }
   };
 
   return (
@@ -26,10 +35,10 @@ export default function SearchBox() {
         className="outline-none text-sm flex-grow lg:text-base"
         onChange={(e) => setValue(e.target.value)}
         value={value}
-        onKeyDown={(e) => e.key === "Enter" && handlelSetSearchParams()}
+        onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
       />
       <button
-        onClick={() => handlelSetSearchParams()}
+        onClick={() => handleSearchSubmit()}
         className="p-2 bg-[#518581] text-white text-sm rounded-sm lg:w-[20%] cursor-pointer hover:bg-[#406b68] transition-all duration-300 lg:text-base"
       >
         Search

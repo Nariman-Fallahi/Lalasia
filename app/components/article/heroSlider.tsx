@@ -3,17 +3,13 @@ import useEmblaCarousel from "embla-carousel-react";
 import type { ArticleListType } from "~/types/articleType";
 import ArticleInfo from "~/ui/articleInfo";
 import { formatDateReadable } from "~/utils/formatDateReadable";
-
+import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface HeroSliderProps {
   data: ArticleListType[];
-  getArticleCategory: (categoryId: number) => Promise<string | undefined>;
 }
 
-export default function HeroSlider({
-  data,
-  getArticleCategory,
-}: HeroSliderProps) {
+export default function HeroSlider({ data }: HeroSliderProps) {
   const autoplay = Autoplay({ delay: 6000, stopOnInteraction: false });
   const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplay]);
 

@@ -13,6 +13,7 @@ import type {
 } from "~/types/homeType";
 import type { IntroType } from "~/types/introType";
 import type { ProductListType } from "~/types/productsType";
+import type { ArticleListType } from "~/types/articleType";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -81,6 +82,18 @@ export async function loader() {
     .eq("id", 1)
     .single();
 
+  let { data: home_articles }: { data: ArticleListType[] | null } =
+    await supabase.from("article_list").select("*").limit(3);
+
+  let { data: latest_article }: { data: ArticleListType[] | null } =
+    await supabase
+      .from("article_list")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+  let home_latest_article = latest_article?.[0] || null;
+
   return {
     home_intro,
     home_benefit_intro,
@@ -92,6 +105,8 @@ export async function loader() {
     home_testimonial_intro,
     home_testimonial_list,
     home_article_intro,
+    home_articles,
+    home_latest_article,
   };
 }
 
@@ -107,6 +122,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     home_testimonial_intro,
     home_testimonial_list,
     home_article_intro,
+    home_articles,
+    home_latest_article,
   } = loaderData;
 
   return (
@@ -127,7 +144,13 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           testimonialList: home_testimonial_list!,
         }}
       />
-      {/* <Articles data={HomeContent.articles} /> */}
+      <Articles
+        data={{
+          intro: home_article_intro!,
+          articlesData: home_articles!,
+          latestArticle: home_latest_article!,
+        }}
+      />
     </>
   );
 }

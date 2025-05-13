@@ -45,7 +45,7 @@ export default function Testimonials({ data }: TestimonialsProps) {
                   <img
                     src={item.author_image}
                     alt=""
-                    className="rounded-full lg:size-12"
+                    className="size-10 rounded-full lg:size-12"
                   />
                   <b className="text-sm lg:text-xl">{item.author_name}</b>
                 </div>

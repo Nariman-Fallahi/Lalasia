@@ -72,34 +72,24 @@ export default function Article({ loaderData }: Route.ComponentProps) {
     trending_articles,
   } = loaderData;
 
-  const getArticleCategory = async (categoryId: number) => {
-    const found = article_category?.find((item) => item.id === categoryId);
-    return found?.category;
-  };
-
   return (
     <div>
       <PageTitle
         title={article_intro?.title!}
         description={article_intro?.description!}
       />
-      <HeroSlider
-        data={articleـheroـslider!}
-        getArticleCategory={getArticleCategory}
-      />
+      <HeroSlider data={articleـheroـslider!} />
       <LatestArticles
         data={{
           intro: article_latest_intro!,
           latestArticles: latest_articles!,
         }}
-        getArticleCategory={getArticleCategory}
       />
       <TrendingTopics
         data={{
           articleCategory: article_category!,
           trendingArticles: trending_articles!,
         }}
-        getArticleCategory={getArticleCategory}
       />
     </div>
   );

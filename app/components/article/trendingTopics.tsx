@@ -4,19 +4,16 @@ import type { ArticleCategoryType, ArticleListType } from "~/types/articleType";
 import ArticleInfo from "~/ui/articleInfo";
 import EyebrowHeader from "~/ui/sectionHeader/eyebrowHeader";
 import TitleHeader from "~/ui/sectionHeader/titleHeader";
+import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface TrendingTopicsProps {
   data: {
     articleCategory: ArticleCategoryType[];
     trendingArticles: ArticleListType[];
   };
-  getArticleCategory: (categoryId: number) => Promise<string | undefined>;
 }
 
-export default function TrendingTopics({
-  data,
-  getArticleCategory,
-}: TrendingTopicsProps) {
+export default function TrendingTopics({ data }: TrendingTopicsProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [emblaRef] = useEmblaCarousel({ dragFree: true });
   const renderedCategories = [

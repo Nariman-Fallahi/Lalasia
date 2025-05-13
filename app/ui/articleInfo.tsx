@@ -1,5 +1,3 @@
-import { title } from "process";
-
 interface ArticleInfoProps {
   category: string;
   title: string;

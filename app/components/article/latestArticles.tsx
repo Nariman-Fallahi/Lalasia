@@ -4,16 +4,13 @@ import ArticleInfo from "~/ui/articleInfo";
 import EyebrowHeader from "~/ui/sectionHeader/eyebrowHeader";
 import TitleHeader from "~/ui/sectionHeader/titleHeader";
 import { formatDateReadable } from "~/utils/formatDateReadable";
+import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface LatestArticlesProps {
   data: { intro: IntroType; latestArticles: ArticleListType[] };
-  getArticleCategory: (categoryId: number) => Promise<string | undefined>;
 }
 
-export default function LatestArticles({
-  data,
-  getArticleCategory,
-}: LatestArticlesProps) {
+export default function LatestArticles({ data }: LatestArticlesProps) {
   return (
     <div className="w-full flex flex-col px-3 mt-10 md:px-6 lg:p-8 gap-2">
       <EyebrowHeader text={data.intro.eyebrow!} />
