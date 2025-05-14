@@ -1,19 +1,12 @@
-import Header from "~/components/home/header";
+import Header from "~/components/home-page/header";
 import type { Route } from "./+types/home";
-import Benefits from "~/components/home/benefits";
-import Product from "~/components/home/product";
-import OurProduct from "~/components/home/ourProduct";
-import Testimonials from "~/components/home/testimonials";
-import Articles from "~/components/home/articles";
+import Benefits from "~/components/home-page/benefits";
+import Product from "~/components/home-page/product";
+import OurProduct from "~/components/home-page/ourProduct";
+import Testimonials from "~/components/home-page/testimonials";
+import Articles from "~/components/home-page/articles";
 import supabase from "~/utils/supabase";
-import type {
-  HomeBenefitFeatureType,
-  HomeOurProductStatType,
-  HomeTestimonialListType,
-} from "~/types/homeType";
-import type { IntroType } from "~/types/introType";
-import type { ProductListType } from "~/types/productsType";
-import type { ArticleListType } from "~/types/articleType";
+import { getArticlesWithCategory } from "~/services/getArticle";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -23,132 +16,129 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
-  let { data: home_intro }: { data: IntroType | null } = await supabase
+  const { data: homeIntro } = await supabase
     .from("home_intro")
     .select("*")
     .eq("id", 1)
     .single();
 
-  let { data: home_benefit_intro }: { data: IntroType | null } = await supabase
+  const { data: homeBenefitIntro } = await supabase
     .from("home_benefit_intro")
     .select("*")
     .eq("id", 1)
     .single();
 
-  let {
-    data: home_benefit_feature,
-  }: { data: HomeBenefitFeatureType[] | null } = await supabase
+  const { data: homeBenefitFeature } = await supabase
     .from("home_benefit_feature")
     .select("*");
 
-  let { data: home_product_intro }: { data: IntroType | null } = await supabase
+  const { data: homeProductIntro } = await supabase
     .from("home_product_intro")
     .select("*")
     .eq("id", 1)
     .single();
 
-  let { data: home_product_list }: { data: ProductListType[] | null } =
-    await supabase.from("product_list").select("*").range(0, 9);
+  const { data: homeProductList } = await supabase
+    .from("product_list")
+    .select("*")
+    .range(0, 9);
 
-  let { data: home_our_product_intro }: { data: IntroType | null } =
-    await supabase
-      .from("home_our_product_intro")
-      .select("*")
-      .eq("id", 1)
-      .single();
+  const { data: homeOurProductIntro } = await supabase
+    .from("home_our_product_intro")
+    .select("*")
+    .eq("id", 1)
+    .single();
 
-  let {
-    data: home_our_product_stat,
-  }: { data: HomeOurProductStatType[] | null } = await supabase
+  const { data: homeOurProductStat } = await supabase
     .from("home_our_product_stat")
     .select("*");
 
-  let { data: home_testimonial_intro }: { data: IntroType | null } =
-    await supabase
-      .from("home_testimonial_intro")
-      .select("*")
-      .eq("id", 1)
-      .single();
+  const { data: homeTestimonialIntro } = await supabase
+    .from("home_testimonial_intro")
+    .select("*")
+    .eq("id", 1)
+    .single();
 
-  let {
-    data: home_testimonial_list,
-  }: { data: HomeTestimonialListType[] | null } = await supabase
+  const { data: homeTestimonialList } = await supabase
     .from("home_testimonial_list")
     .select("*");
 
-  let { data: home_article_intro }: { data: IntroType | null } = await supabase
+  const { data: homeArticleIntro } = await supabase
     .from("home_article_intro")
     .select("*")
     .eq("id", 1)
     .single();
 
-  let { data: home_articles }: { data: ArticleListType[] | null } =
-    await supabase.from("article_list").select("*").limit(3);
+  const { data: articles } = await supabase
+    .from("article_list")
+    .select("*")
+    .limit(3);
 
-  let { data: latest_article }: { data: ArticleListType[] | null } =
-    await supabase
-      .from("article_list")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(1);
+  const homeArticles = await getArticlesWithCategory(articles!);
 
-  let home_latest_article = latest_article?.[0] || null;
+  const { data: latestArticle } = await supabase
+    .from("article_list")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  const homeLatestArticle = await getArticlesWithCategory(latestArticle!);
 
   return {
-    home_intro,
-    home_benefit_intro,
-    home_benefit_feature,
-    home_product_intro,
-    home_product_list,
-    home_our_product_intro,
-    home_our_product_stat,
-    home_testimonial_intro,
-    home_testimonial_list,
-    home_article_intro,
-    home_articles,
-    home_latest_article,
+    homeIntro,
+    homeBenefitIntro,
+    homeBenefitFeature,
+    homeProductIntro,
+    homeProductList,
+    homeOurProductIntro,
+    homeOurProductStat,
+    homeTestimonialIntro,
+    homeTestimonialList,
+    homeArticleIntro,
+    homeArticles,
+    homeLatestArticle: homeLatestArticle[0],
   };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   const {
-    home_intro,
-    home_benefit_intro,
-    home_benefit_feature,
-    home_product_intro,
-    home_product_list,
-    home_our_product_intro,
-    home_our_product_stat,
-    home_testimonial_intro,
-    home_testimonial_list,
-    home_article_intro,
-    home_articles,
-    home_latest_article,
+    homeIntro,
+    homeBenefitIntro,
+    homeBenefitFeature,
+    homeProductIntro,
+    homeProductList,
+    homeOurProductIntro,
+    homeOurProductStat,
+    homeTestimonialIntro,
+    homeTestimonialList,
+    homeArticleIntro,
+    homeArticles,
+    homeLatestArticle,
   } = loaderData;
 
   return (
     <>
-      <Header data={home_intro!} />
+      <Header data={homeIntro!} />
       <Benefits
-        data={{ intro: home_benefit_intro!, features: home_benefit_feature! }}
+        data={{ intro: homeBenefitIntro!, features: homeBenefitFeature! }}
       />
       <Product
-        data={{ intro: home_product_intro!, productsList: home_product_list! }}
+        data={{ intro: homeProductIntro!, productsList: homeProductList! }}
       />
       <OurProduct
-        data={{ intro: home_our_product_intro!, stats: home_our_product_stat! }}
+        data={{ intro: homeOurProductIntro!, stats: homeOurProductStat! }}
       />
       <Testimonials
         data={{
-          intro: home_testimonial_intro!,
-          testimonialList: home_testimonial_list!,
+          intro: homeTestimonialIntro!,
+          testimonialList: homeTestimonialList!,
         }}
       />
       <Articles
         data={{
-          intro: home_article_intro!,
-          articlesData: home_articles!,
-          latestArticle: home_latest_article!,
+          intro: homeArticleIntro!,
+          articlesData: homeArticles!,
+          latestArticle: homeLatestArticle!,
         }}
       />
     </>

@@ -8,7 +8,11 @@ interface ProductsListProps {
   totalProducts: number;
 }
 
-export default function ProductsList({ data, totalPages, totalProducts }: ProductsListProps) {
+export default function ProductsList({
+  data,
+  totalPages,
+  totalProducts,
+}: ProductsListProps) {
   return (
     <div className="flex flex-col px-3 mt-4 lg:px-8">
       <div className="flex items-center gap-2 lg:gap-5">
@@ -26,9 +30,11 @@ export default function ProductsList({ data, totalPages, totalProducts }: Produc
         ))}
       </div>
 
-      <div className="w-full flex justify-center">
-        <Pagination totalPages={totalPages} />
-      </div>
+      {data.length > 0 && (
+        <div className="w-full flex justify-center">
+          <Pagination totalPages={totalPages} />
+        </div>
+      )}
     </div>
   );
 }

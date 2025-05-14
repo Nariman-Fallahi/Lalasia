@@ -3,7 +3,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import type { ArticleListType } from "~/types/articleType";
 import ArticleInfo from "~/ui/articleInfo";
 import { formatDateReadable } from "~/utils/formatDateReadable";
-import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface HeroSliderProps {
   data: ArticleListType[];
@@ -16,7 +15,7 @@ export default function HeroSlider({ data }: HeroSliderProps) {
   return (
     <div className="w-full overflow-hidden mt-6" ref={emblaRef}>
       <div className="flex gap-6">
-        {data.map(async (item) => (
+        {data.map((item) => (
           <div key={item.id} className="w-full flex-[0_0_100%]">
             <img
               src={item.image}
@@ -26,7 +25,7 @@ export default function HeroSlider({ data }: HeroSliderProps) {
             <div className="w-full px-6 flex flex-col gap-2 mt-[-4rem]">
               <div className="bg-white p-4 rounded w-[90%] mx-auto flex flex-col gap-2 lg:p-6">
                 <ArticleInfo
-                  category={(await getArticleCategory(item.category)) || ""}
+                  category={item.category!}
                   title={item.title}
                   author={{
                     avatar: item.author_avatar,

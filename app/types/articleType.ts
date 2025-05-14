@@ -1,8 +1,8 @@
 export type ArticleListType = {
-  id: number;
+  id: number ;
   created_at: string;
   image: string;
-  category: number;
+  category: string | undefined;
   title: string;
   author_name: string;
   author_avatar: string;

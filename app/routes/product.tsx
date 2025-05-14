@@ -1,6 +1,6 @@
-import ProductDetails from "~/components/product/productDetails";
+import ProductDetails from "~/components/product-page/productDetails";
 import type { Route } from "./+types/product";
-import RelatedItems from "~/components/product/relatedItems";
+import RelatedItems from "~/components/product-page/relatedItems";
 import supabase from "~/utils/supabase";
 import type { ProductListType } from "~/types/productsType";
 
@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.productId;
 
-  let { data: product_data }: { data: ProductListType | null } = await supabase
+  const { data: productData } = await supabase
     .from("product_list")
     .select("*")
     .eq("id", id)
@@ -22,36 +22,41 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   let colorsHex = [];
 
-  const colors = product_data?.color_id.split(",");
+  const colorIds = productData?.color_id.split(",");
 
-  for (const colorId of colors!) {
-    let { data: colors_hex }: { data: { id: number; hex: string } | null } =
-      await supabase.from("colors").select("*").eq("id", colorId).single();
+  for (const colorId of colorIds!) {
+    const { data: colorHex } = await supabase
+      .from("colors")
+      .select("*")
+      .eq("id", colorId)
+      .single();
 
-    colorsHex?.push(colors_hex);
+    colorsHex.push(colorHex);
   }
 
-  let { data: product_related_items }: { data: ProductListType[] | null } =
-    await supabase
-      .from("product_list")
-      .select("*")
-      .eq("category", product_data?.category);
+  const { data: productRelatedItems } = await supabase
+    .from("product_list")
+    .select("*")
+    .eq("category", productData?.category);
 
-  return { productData: { product_data, colorsHex }, product_related_items };
+  return {
+    productData: { product: productData, colorsHex },
+    productRelatedItems,
+  };
 }
 
 export default async function Product({ loaderData }: Route.ComponentProps) {
-  const { productData, product_related_items } = loaderData;
+  const { productData, productRelatedItems } = loaderData;
 
   return (
     <div className="px-3 md:px-6 lg:p-8">
       <ProductDetails
         data={{
-          product: productData.product_data!,
+          product: productData.product!,
           colorsHex: productData.colorsHex,
         }}
       />
-      <RelatedItems data={product_related_items!} />
+      <RelatedItems data={productRelatedItems!} />
     </div>
   );
 }

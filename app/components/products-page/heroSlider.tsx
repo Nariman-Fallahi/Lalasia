@@ -1,6 +1,5 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { HomeContent } from "~/constants/siteContent";
 import type { ProductHeroSlideType } from "~/types/productsType";
 
 interface HeroSliderProps {

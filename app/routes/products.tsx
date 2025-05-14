@@ -1,7 +1,7 @@
 import type { Route } from "./+types/products";
 import PageTitle from "~/ui/pageTitle";
-import HeroSlider from "~/components/products/heroSlider";
-import ProductsList from "~/components/products/productsList";
+import HeroSlider from "~/components/products-page/heroSlider";
+import ProductsList from "~/components/products-page/productsList";
 import SearchBox from "~/components/searchBox";
 import supabase from "~/utils/supabase";
 import type {
@@ -25,48 +25,49 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const search = url.searchParams.get("search") || "";
 
-  let { data: product_intro }: { data: ProductIntroType | null } =
-    await supabase.from("product_intro").select("*").eq("id", 1).single();
+  const { data: productIntro } = await supabase
+    .from("product_intro")
+    .select("*")
+    .eq("id", 1)
+    .single();
 
-  let { data: product_hero_slide }: { data: ProductHeroSlideType[] | null } =
-    await supabase.from("product_hero_slide").select("*");
+  const { data: productHeroSlide } = await supabase
+    .from("product_hero_slide")
+    .select("*");
 
-  let {
-    data: product_list,
-    count,
-  }: { data: ProductListType[] | null; count: number | null } = await supabase
+  const { data: productList, count } = await supabase
     .from("product_list")
     .select("*", { count: "exact" })
     .range(offset, offset + pageSize - 1)
     .ilike("title", `%${search}%`);
 
   return {
-    product_intro,
-    product_hero_slide,
-    product_list: { data: product_list, count },
+    productIntro,
+    productHeroSlide,
+    productList: { data: productList, count },
   };
 }
 
 export default function Products({ loaderData }: Route.ComponentProps) {
-  const { product_intro, product_hero_slide, product_list } = loaderData;
-  const totalPages = Math.ceil(product_list.count! / 10);
+  const { productIntro, productHeroSlide, productList } = loaderData;
+  const totalPages = Math.ceil(productList.count! / 10);
 
   return (
     <>
       <PageTitle
-        title={product_intro?.title!}
-        description={product_intro?.description!}
+        title={productIntro?.title!}
+        description={productIntro?.description!}
       />
-      <HeroSlider data={product_hero_slide!} />
+      <HeroSlider data={productHeroSlide!} />
       <div className="mt-6 p-3 flex md:justify-center">
         <div className="w-full md:w-2/3">
           <SearchBox />
         </div>
       </div>
       <ProductsList
-        data={product_list.data!}
+        data={productList.data!}
         totalPages={totalPages}
-        totalProducts={product_list.count!}
+        totalProducts={productList.count!}
       />
     </>
   );

@@ -4,7 +4,6 @@ import type { ArticleCategoryType, ArticleListType } from "~/types/articleType";
 import ArticleInfo from "~/ui/articleInfo";
 import EyebrowHeader from "~/ui/sectionHeader/eyebrowHeader";
 import TitleHeader from "~/ui/sectionHeader/titleHeader";
-import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface TrendingTopicsProps {
   data: {
@@ -45,7 +44,7 @@ export default function TrendingTopics({ data }: TrendingTopicsProps) {
       </div>
 
       <div className="grid grid-cols-1 mt-10 gap-6 lg:gap-20">
-        {data.trendingArticles.map(async (item) => (
+        {data.trendingArticles.map((item) => (
           <div
             key={item.id}
             className="flex justify-between items-center gap-4 lg:gap-8"
@@ -56,7 +55,7 @@ export default function TrendingTopics({ data }: TrendingTopicsProps) {
               className="h-full w-[35%] lg:w-[25%] rounded"
             />
             <ArticleInfo
-              category={(await getArticleCategory(item.category)) || ""}
+              category={item.category!}
               title={item.title}
               description={item.description}
               author={{

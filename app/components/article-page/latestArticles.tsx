@@ -4,7 +4,6 @@ import ArticleInfo from "~/ui/articleInfo";
 import EyebrowHeader from "~/ui/sectionHeader/eyebrowHeader";
 import TitleHeader from "~/ui/sectionHeader/titleHeader";
 import { formatDateReadable } from "~/utils/formatDateReadable";
-import { getArticleCategory } from "~/utils/getArticleCategory";
 
 interface LatestArticlesProps {
   data: { intro: IntroType; latestArticles: ArticleListType[] };
@@ -17,7 +16,7 @@ export default function LatestArticles({ data }: LatestArticlesProps) {
       <TitleHeader text={data.intro.title!} />
 
       <div className="mt-3 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:mt-10 lg:gap-10">
-        {data.latestArticles.map(async (item) => (
+        {data.latestArticles.map((item) => (
           <div className="flex flex-col gap-3">
             <img
               src={item.image}
@@ -25,7 +24,7 @@ export default function LatestArticles({ data }: LatestArticlesProps) {
               className="w-full h-50 object-center object-cover lg:h-80"
             />
             <ArticleInfo
-              category={(await getArticleCategory(item.category)) || ""}
+              category={item.category!}
               title={item.title}
               description={item.description}
               author={{

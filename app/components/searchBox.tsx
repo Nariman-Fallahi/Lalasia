@@ -13,14 +13,14 @@ export default function SearchBox({ isNavigateToProducts }: SearchBoxProps) {
 
   useEffect(() => {
     const search = searchParams.get("search");
-    if (search) {
-      setValue(search);
-    }
+    setValue(decodeURIComponent(search || ""));
   }, [searchParams]);
 
   const handleSearchSubmit = () => {
+    if (!value) return;
+
     if (isNavigateToProducts) {
-      navigate(`/products?search=${value}`);
+      navigate(`/products?search=${encodeURIComponent(value)}`);
     } else {
       setSearchParams({ search: value || "" });
     }
