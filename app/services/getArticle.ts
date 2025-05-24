@@ -1,7 +1,8 @@
 import type { ArticleCategoryType, ArticleListType } from "~/types/articleType";
-import supabase from "../utils/supabase";
+import { createClient } from "~/utils/supabase/client";
 
 const getArticleCategory = async (categoryId: string) => {
+  const supabase = createClient();
   let { data: article_category }: { data: ArticleCategoryType[] | null } =
     await supabase.from("article_category").select("*");
 
@@ -11,7 +12,7 @@ const getArticleCategory = async (categoryId: string) => {
   return found?.category;
 };
 
-export const getArticlesWithCategory = async ( data :  ArticleListType[]) => {
+export const getArticlesWithCategory = async (data: ArticleListType[]) => {
   return await Promise.all(
     data.map(async (article) => {
       const category = await getArticleCategory(article.category!);

@@ -9,8 +9,6 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import HeaderMenu from "./components/menu/headerMenu";
-import FooterMenu from "./components/menu/footerMenu";
 import { LoadingBarContainer } from "react-top-loading-bar";
 import LoadingBarComponent from "./loadingBar";
 
@@ -34,9 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <LoadingBarContainer>
           <LoadingBarComponent />
-          <HeaderMenu />
           {children}
-          <FooterMenu />
         </LoadingBarContainer>
         <ScrollRestoration />
         <Scripts />

@@ -1,8 +1,7 @@
 import ProductDetails from "~/components/product-page/productDetails";
 import type { Route } from "./+types/product";
 import RelatedItems from "~/components/product-page/relatedItems";
-import supabase from "~/utils/supabase";
-import type { ProductListType } from "~/types/productsType";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,6 +11,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
+  const supabase = createClient();
   const id = params.productId;
 
   const { data: productData } = await supabase

@@ -3,10 +3,10 @@ import HeroSlider from "~/components/article-page/heroSlider";
 import TrendingTopics from "~/components/article-page/trendingTopics";
 import PageTitle from "~/ui/pageTitle";
 import type { Route } from "./+types/article";
-import supabase from "~/utils/supabase";
 import type { IntroType } from "~/types/introType";
 import type { ArticleCategoryType, ArticleListType } from "~/types/articleType";
 import { getArticlesWithCategory } from "~/services/getArticle";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -16,6 +16,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
+  const supabase = createClient();
   const categoryId = params.categoryId;
 
   const { data: articleIntro }: { data: IntroType | null } = await supabase

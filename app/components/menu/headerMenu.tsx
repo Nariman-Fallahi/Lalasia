@@ -9,8 +9,14 @@ import {
 import { useEffect, useState } from "react";
 import { HEADER_MENU_PATHS } from "~/constants/paths";
 import { useLocation, Link, NavLink } from "react-router";
+import type { User } from "@supabase/supabase-js";
 
-export default function HeaderMenu() {
+interface HeaderMenuProps {
+  isLogin: boolean;
+  user: User;
+}
+
+export default function HeaderMenu({ isLogin, user }: HeaderMenuProps) {
   const [menuStatus, setMenuStatus] = useState<"open" | "close" | null>(null);
   const { pathname } = useLocation();
 
@@ -53,10 +59,12 @@ export default function HeaderMenu() {
         </ul>
 
         <ul className="hidden md:flex items-center gap-4">
-          <UserRound
-            size={26}
-            className="text-gray-700 cursor-pointer hover:text-cyan-800 transition-all decoration-300"
-          />
+          <Link to={isLogin ? "" : "/auth"}>
+            <UserRound
+              size={26}
+              className="text-gray-700 cursor-pointer hover:text-cyan-800 transition-all decoration-300"
+            />
+          </Link>
           <ShoppingBasket
             size={26}
             className="text-gray-700 cursor-pointer hover:text-cyan-800 transition-all decoration-300"

@@ -2,7 +2,7 @@ import Header from "~/components/services-page/header";
 import Portofolio from "~/components/services-page/portofolio";
 import ServiceList from "~/components/services-page/serviceList";
 import type { Route } from "./+types/services";
-import supabase from "~/utils/supabase";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,6 +12,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
+  const supabase = createClient();
+
   const { data: serviceIntro } = await supabase
     .from("service_intro")
     .select("*")

@@ -5,8 +5,8 @@ import Product from "~/components/home-page/product";
 import OurProduct from "~/components/home-page/ourProduct";
 import Testimonials from "~/components/home-page/testimonials";
 import Articles from "~/components/home-page/articles";
-import supabase from "~/utils/supabase";
 import { getArticlesWithCategory } from "~/services/getArticle";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -16,6 +16,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
+  const supabase = createClient();
+
   const { data: homeIntro } = await supabase
     .from("home_intro")
     .select("*")

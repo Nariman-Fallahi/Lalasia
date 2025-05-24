@@ -3,14 +3,7 @@ import OurTeam from "~/components/about-page/ourTeam";
 import CustomVideoPlayer from "~/components/customVideoPlayer";
 import PageTitle from "~/ui/pageTitle";
 import type { Route } from "./+types/about";
-import supabase from "~/utils/supabase";
-import type {
-  AboutIntroType,
-  AboutMissionFeatureType,
-  AboutMissionStatType,
-  AboutTeamMemberType,
-} from "~/types/aboutType";
-import type { IntroType } from "~/types/introType";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,6 +13,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
+  const supabase = createClient();
+
   const { data: aboutIntro } = await supabase
     .from("about_intro")
     .select("*")

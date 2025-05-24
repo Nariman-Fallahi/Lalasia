@@ -3,12 +3,7 @@ import PageTitle from "~/ui/pageTitle";
 import HeroSlider from "~/components/products-page/heroSlider";
 import ProductsList from "~/components/products-page/productsList";
 import SearchBox from "~/components/searchBox";
-import supabase from "~/utils/supabase";
-import type {
-  ProductHeroSlideType,
-  ProductIntroType,
-  ProductListType,
-} from "~/types/productsType";
+import { createClient } from "~/utils/supabase/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -18,6 +13,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
+  const supabase = createClient();
   const url = new URL(request.url);
   const currentPage = url.searchParams.get("page") || 1;
   const pageSize = 10;
